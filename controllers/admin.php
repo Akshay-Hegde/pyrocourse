@@ -27,6 +27,7 @@ class Admin extends Admin_Controller
         $this->lang->load('course');
         $this->load->driver('Streams');
         $this->load->helper('course');
+        $this->load->model('pyrocourse_m');
     }
 
     /**
@@ -83,7 +84,7 @@ class Admin extends Admin_Controller
             ->append_js('jquery/jquery.ui.nestedSortable.js')
             ->append_js('jquery/jquery.cooki.js')
             ->append_js('jquery/jquery.stickyscroll.js')
-            ->append_js('module::index.js')
+            ->append_js('module::lesson.js')
 
             ->append_css('module::index.css')
             ->build('admin/manage', $data);
@@ -180,8 +181,6 @@ class Admin extends Admin_Controller
 
     public function manage_lesson($id = 0)
     {
-        $this->load->model('pyrocourse_m');
-
         // get lesson detail
         $data['lesson'] = $this->streams->entries->get_entry($id, 'lesson', 'streams');
 
@@ -207,7 +206,7 @@ class Admin extends Admin_Controller
             ->append_js('jquery/jquery.ui.nestedSortable.js')
             ->append_js('jquery/jquery.cooki.js')
             ->append_js('jquery/jquery.stickyscroll.js')
-            ->append_js('module::index.js')
+            ->append_js('module::lesson.js')
 
             ->append_css('module::index.css')
             ->build('admin/manage_lesson', $data);
@@ -314,36 +313,30 @@ class Admin extends Admin_Controller
     }
 
     /**
-     * Order the pages and record their children
+     * Order the lesson
      *
      * Grabs `order` and `data` from the POST data.
      */
-    public function order()
+    public function order_lesson()
     {
         $order  = $this->input->post('order');
         $data   = $this->input->post('data');
-        $root_pages = isset($data['root_pages']) ? $data['root_pages'] : array();
 
         if (is_array($order))
         {
-
-            foreach ($order as $i => $page)
+            foreach ($order as $i => $lesson)
             {
-                $id = str_replace('page_', '', $page['id']);
+                $id = str_replace('lesson_', '', $lesson['id']);
                 
-                //set the order of the root pages
-                $this->page_m->update($id, array('order' => $i), true);
-
-                //iterate through children and set their order and parent
-                $this->page_m->_set_children($page);
+                //set the order of the root lessons
+                $this->pyrocourse_m->update('lesson', $id, array('ordering_count' => $i));
             }
-
-            // rebuild page URIs
-            $this->page_m->update_lookup($root_pages);
         }
+
+        // echo json_encode($data);
     }
 
-    // CONTENT FUNCTION
+// CONTENT FUNCTION
 
     public function add_content($type = 'text', $lesson_id = false)
     {

@@ -36,4 +36,11 @@
 					->row_array();
 	}
 
+	public function update($table, $id, $data){
+		$this->db->where('id', $id)
+				->update($this->prefix.$table, $data);
+
+		return $this->db->affected_rows();
+	}
+
  }

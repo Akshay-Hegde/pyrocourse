@@ -22,6 +22,7 @@
 		if($lesson_id){
 			return $this->db->from('pc_lesson_content')
 					->where('lesson_id', $lesson_id)
+					->order_by('ordering_count', 'asc')
 					->get()->result_array();
 		}
 

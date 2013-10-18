@@ -98,7 +98,7 @@ class Admin extends Admin_Controller
      *
      * @return	void
      */
-    public function create_course()
+    public function course_create()
     {
         $extra = array(
             'return' => 'admin/pyrocourse/manage/-id-',
@@ -136,7 +136,7 @@ class Admin extends Admin_Controller
      * @param   int [$id] The id of the pyrocourse to the be deleted.
      * @return	void
      */
-    public function edit_course($id = 0)
+    public function course_edit($id = 0)
     {
         $extra = array(
             'return' => 'admin/pyrocourse/manage/'.$id,
@@ -169,7 +169,7 @@ class Admin extends Admin_Controller
      * @param   int [$id] The id of pyrocourse to be deleted
      * @return  void
      */
-    public function delete_course($id = 0)
+    public function course_delete($id = 0)
     {
         $this->streams->entries->delete_entry($id, 'course', 'streams');
         $this->session->set_flashdata('error', lang('pyrocourse:deleted'));
@@ -179,7 +179,7 @@ class Admin extends Admin_Controller
 
 // LESSON FUNCTIONS //
 
-    public function manage_lesson($id = 0)
+    public function lesson_manage($id = 0)
     {
         // get lesson detail
         $data['lesson'] = $this->streams->entries->get_entry($id, 'lesson', 'streams');
@@ -206,7 +206,8 @@ class Admin extends Admin_Controller
             ->append_js('jquery/jquery.ui.nestedSortable.js')
             ->append_js('jquery/jquery.cooki.js')
             ->append_js('jquery/jquery.stickyscroll.js')
-            ->append_js('module::lesson.js')
+            ->append_js('module::content.js')
+            ->append_js('module::assignment.js')
 
             ->append_css('module::index.css')
             ->build('admin/manage_lesson', $data);
@@ -220,7 +221,7 @@ class Admin extends Admin_Controller
      *
      * @return  void
      */
-    public function create_lesson($course_id = 0)
+    public function lesson_create($course_id = 0)
     {
         $extra = array(
             'return' => 'admin/pyrocourse/manage/'.$course_id,
@@ -262,7 +263,7 @@ class Admin extends Admin_Controller
      * @param   int [$id] The id of the pyrocourse to the be deleted.
      * @return  void
      */
-    public function edit_lesson($id = 0)
+    public function lesson_edit($id = 0)
     {
         $extra = array(
             'return' => 'admin/pyrocourse/manage_lesson/'.$id,
@@ -297,7 +298,7 @@ class Admin extends Admin_Controller
      * @param   int [$id] The id of pyrocourse to be deleted
      * @return  void
      */
-    public function delete_lesson($id = 0)
+    public function lesson_delete($id = 0)
     {
         $lesson = $this->streams->entries->get_entry($id, 'lesson', 'streams');
         if($lesson){
@@ -312,12 +313,7 @@ class Admin extends Admin_Controller
         }
     }
 
-    /**
-     * Order the lesson
-     *
-     * Grabs `order` and `data` from the POST data.
-     */
-    public function order_lesson()
+    public function lesson_order()
     {
         $order  = $this->input->post('order');
         $data   = $this->input->post('data');
@@ -338,10 +334,10 @@ class Admin extends Admin_Controller
 
 // CONTENT FUNCTION
 
-    public function add_content($type = 'text', $lesson_id = false)
+    public function content_add($type = 'text', $lesson_id = false)
     {
         $extra = array(
-            'return' => 'admin/pyrocourse/manage_lesson/'.$lesson_id,
+            'return' => 'admin/pyrocourse/lesson_manage/'.$lesson_id,
             'success_message' => lang('pyrocourse:content:submit_success'),
             'failure_message' => lang('pyrocourse:content:submit_failure'),
             'title' => anchor('admin/pyrocourse/manage_lesson/'.$lesson_id, get_lessonname($lesson_id)).' &raquo; '.lang('pyrocourse:add_'.$type.'_content'),
@@ -355,7 +351,7 @@ class Admin extends Admin_Controller
         $this->streams->cp->entry_form('content_'.$type, 'streams', 'new', null, true, $extra, array(), false, $hidden, $defaults);
     }
 
-    public function edit_content($type = 'text', $content_id = false, $lesson_id = false)
+    public function content_edit($type = 'text', $content_id = false, $lesson_id = false)
     {
         $extra = array(
             'return' => 'admin/pyrocourse/manage_lesson/'.$lesson_id,
@@ -369,12 +365,31 @@ class Admin extends Admin_Controller
         $this->streams->cp->entry_form('content_'.$type, 'streams', 'edit', $content_id, true, $extra, $skips);
     }
 
+    public function content_order()
+    {
+        $order  = $this->input->post('order');
+        $data   = $this->input->post('data');
+
+        if (is_array($order))
+        {
+            foreach ($order as $i => $content)
+            {
+                $id = str_replace('content_', '', $content['id']);
+                
+                //set the order of the root contents
+                $this->pyrocourse_m->update('lesson_content', $id, array('ordering_count' => $i));
+            }
+        }
+
+        // echo json_encode($data);
+    }
+
 // ASSIGNMENT FUNCTION //
 
-    public function create_assignment($lesson_id = 0)
+    public function assignment_create($lesson_id = 0)
     {
         $extra = array(
-            'return' => 'admin/pyrocourse/manage/'.$lesson_id,
+            'return' => 'admin/pyrocourse/lesson_manage/'.$lesson_id,
             'success_message' => lang('pyrocourse:lesson:submit_success'),
             'failure_message' => lang('pyrocourse:lesson:submit_failure'),
             'title' => anchor('admin/pyrocourse/manage_lesson/'.$lesson_id, get_lessonname($lesson_id)).' &raquo; '.lang('pyrocourse:add_assignment'),
@@ -400,7 +415,7 @@ class Admin extends Admin_Controller
      * @param   int [$id] The id of the pyrocourse to the be deleted.
      * @return  void
      */
-    public function edit_assignment($id = 0)
+    public function assignment_edit($id = 0)
     {
         $extra = array(
             'return' => 'admin/pyrocourse/manage_assignment/'.$id,
@@ -433,7 +448,7 @@ class Admin extends Admin_Controller
      * @param   int [$id] The id of pyrocourse to be deleted
      * @return  void
      */
-    public function delete_assignment($id = 0)
+    public function assignment_delete($id = 0)
     {
         $lesson = $this->streams->entries->get_entry($id, 'lesson', 'streams');
         if($lesson){
@@ -446,5 +461,24 @@ class Admin extends Admin_Controller
  
             redirect(getenv('HTTP_REFERER'));
         }
+    }
+
+    public function assignment_order()
+    {
+        $order  = $this->input->post('order');
+        $data   = $this->input->post('data');
+
+        if (is_array($order))
+        {
+            foreach ($order as $i => $assignment)
+            {
+                $id = str_replace('assignment_', '', $assignment['id']);
+                
+                //set the order of the root assignments
+                $this->pyrocourse_m->update('assignment', $id, array('ordering_count' => $i));
+            }
+        }
+
+        // echo json_encode($data);
     }
 }

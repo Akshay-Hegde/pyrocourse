@@ -2,9 +2,9 @@
 	$(function() {
 
 		// set values for pyro.sort_tree (we'll use them below also)
-		$item_list	= $('#lesson-list ul.sortable');
-		$url		= 'admin/pyrocourse/lesson_order';
-		$cookie		= 'open_lesson';
+		$item_list	= $('#assignment-list ul.sortable');
+		$url		= 'admin/pyrocourse/assignment_order';
+		$cookie		= 'open_assignment';
 
 		// make the link clickable and go to the link page
 		$item_list.find('li a').live('click', function(e) {
@@ -16,8 +16,8 @@
 			// In the pages module we get a list of root pages
 			root_pages = [];
 			// grab an array of root page ids
-			$('ul.sortable').children('li').each(function(){
-				root_pages.push($(this).attr('id').replace('lesson_', ''));
+			$item_list.children('li').each(function(){
+				root_pages.push($(this).attr('id').replace('assignment_', ''));
 			});
 			return { 'root_pages' : root_pages };
 		}

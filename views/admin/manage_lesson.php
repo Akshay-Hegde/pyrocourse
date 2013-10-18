@@ -51,20 +51,20 @@
 			<section class="title">
 				<h4>
 					<?php echo lang('pyrocourse:content'); ?>
-					<?php echo anchor('admin/pyrocourse/add_content/text/'.$this->uri->segment(4), lang('pyrocourse:add_text_content'), 'class="button" style="float:right;margin-right:17px;"');?>
-					<?php echo anchor('admin/pyrocourse/add_content/video/'.$this->uri->segment(4), lang('pyrocourse:add_video_content'), 'class="button" style="float:right;margin-right:7px;"');?>
+					<?php echo anchor('admin/pyrocourse/content_add/text/'.$this->uri->segment(4), lang('pyrocourse:add_text_content'), 'class="button" style="float:right;margin-right:17px;"');?>
+					<?php echo anchor('admin/pyrocourse/content_add/video/'.$this->uri->segment(4), lang('pyrocourse:add_video_content'), 'class="button" style="float:right;margin-right:7px;"');?>
 				</h4>
 			</section>
 			<section class="item">
 				<div class="content">
 
 					<?php if(count($contents) > 0): ?>
-					<div id="page-list">
+					<div id="content-list">
 						<ul class="sortable small">
 							<?php foreach ($contents as $value) : ?>
-							<li id="assignment_<?php echo $value['id']; ?>">
+							<li id="content_<?php echo $value['id']; ?>">
 								<div>
-									<a href="<?php echo site_url('admin/pyrocourse/edit_content/'.$value['content_type'].'/'.$value['content_id'].'/'.$value['lesson_id']); ?>" 
+									<a href="<?php echo site_url('admin/pyrocourse/content_edit/'.$value['content_type'].'/'.$value['content_id'].'/'.$value['lesson_id']); ?>" 
 										class="<?php echo $value['content_type']; ?>" 
 										rel="<?php echo $value['id']; ?>"
 										title="<?php echo $value['title']; ?>"><?php echo ucfirst($value['content_type']); ?> - <?php echo $value['title']; ?></a>
@@ -91,7 +91,7 @@
 			<section class="title">
 				<h4>
 					<?php echo lang('pyrocourse:assignments');?>
-					<?php echo anchor('admin/pyrocourse/create_assignment/'.$this->uri->segment(4), lang('pyrocourse:add_assignment'), 'class="button" style="float:right;margin-right:17px;"');?>
+					<?php echo anchor('admin/pyrocourse/assignment_create/'.$this->uri->segment(4), lang('pyrocourse:add_assignment'), 'class="button" style="float:right;margin-right:17px;"');?>
 				</h4>
 			</section>
 
@@ -99,7 +99,7 @@
 				<div class="content">
 
 					<?php if(count($assignment['entries']) > 0): ?>
-					<div id="page-list">
+					<div id="assignment-list">
 						<ul class="sortable small">
 							<?php foreach ($assignment['entries'] as $value) : ?>
 							<li id="assignment_<?php echo $value['id']; ?>">

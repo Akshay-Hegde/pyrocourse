@@ -28,6 +28,8 @@ class Admin extends Admin_Controller
         $this->load->driver('Streams');
         $this->load->helper('course');
         $this->load->model('pyrocourse_m');
+
+        $this->template->append_css('module::index.css');
     }
 
     /**
@@ -41,30 +43,16 @@ class Admin extends Admin_Controller
      */
     public function index()
     {
-        // The extra array is where most of our
-        // customization options go.
-        $extra = array();
+        $extra['title'] = lang('pyrocourse:pyrocourses');
 
-        // The title can be a string, or a language
-        // string, prefixed by lang:
-        $extra['title'] = 'lang:pyrocourse:pyrocourses';
-        
-        // We can customize the buttons that appear
-        // for each row. They point to our own functions
-        // elsewhere in this controller. -entry_id- will
-        // be replaced by the entry id of the row.
         $extra['buttons'] = array(
             array(
                 'label' => lang('pyrocourse:manage'),
-                'url' => 'admin/pyrocourse/manage/-entry_id-'
+                'url' => 'admin/course/manage/-entry_id-'
             )
         );
 
-        // In this example, we are setting the 5th parameter to true. This
-        // signals the function to use the template library to build the page
-        // so we don't have to. If we had that set to false, the function
-        // would return a string with just the form.
-        $this->streams->cp->entries_table('course', 'streams', 3, 'admin/pyrocourse/index', true, $extra);
+        $this->streams->cp->entries_table('course', 'streams', 3, 'admin/course/index', true, $extra);
     }
 
     public function manage($id = 0)
@@ -86,7 +74,7 @@ class Admin extends Admin_Controller
             ->append_js('jquery/jquery.stickyscroll.js')
             ->append_js('module::lesson.js')
 
-            ->append_css('module::index.css')
+            
             ->build('admin/manage', $data);
     }
 
@@ -101,10 +89,10 @@ class Admin extends Admin_Controller
     public function course_create()
     {
         $extra = array(
-            'return' => 'admin/pyrocourse/manage/-id-',
+            'return' => 'admin/course/manage/-id-',
             'success_message' => lang('pyrocourse:submit_success'),
             'failure_message' => lang('pyrocourse:submit_failure'),
-            'title' => 'lang:pyrocourse:new_course',
+            'title' => lang('pyrocourse:new_course')
         );
 
         $tabs = array(
@@ -139,10 +127,10 @@ class Admin extends Admin_Controller
     public function course_edit($id = 0)
     {
         $extra = array(
-            'return' => 'admin/pyrocourse/manage/'.$id,
+            'return' => 'admin/course/manage/'.$id,
             'success_message' => lang('pyrocourse:submit_success'),
             'failure_message' => lang('pyrocourse:submit_failure'),
-            'title' => 'lang:pyrocourse:edit_course'
+            'title' => lang('pyrocourse:edit_course')
         );
 
         $tabs = array(
@@ -174,7 +162,7 @@ class Admin extends Admin_Controller
         $this->streams->entries->delete_entry($id, 'course', 'streams');
         $this->session->set_flashdata('error', lang('pyrocourse:deleted'));
  
-        redirect('admin/pyrocourse/');
+        redirect('admin/course/');
     }
 
 // LESSON FUNCTIONS //
@@ -209,7 +197,7 @@ class Admin extends Admin_Controller
             ->append_js('module::content.js')
             ->append_js('module::assignment.js')
 
-            ->append_css('module::index.css')
+            
             ->build('admin/manage_lesson', $data);
     }
 
@@ -224,10 +212,10 @@ class Admin extends Admin_Controller
     public function lesson_create($course_id = 0)
     {
         $extra = array(
-            'return' => 'admin/pyrocourse/manage/'.$course_id,
+            'return' => 'admin/course/manage/'.$course_id,
             'success_message' => lang('pyrocourse:lesson:submit_success'),
             'failure_message' => lang('pyrocourse:lesson:submit_failure'),
-            'title' => anchor('admin/pyrocourse/manage/'.$course_id, get_coursename($course_id)).' &raquo; '.lang('pyrocourse:new_lesson'),
+            'title' => anchor('admin/course/manage/'.$course_id, get_coursename($course_id)).' &raquo; '.lang('pyrocourse:new_lesson'),
         );
 
         $tabs = array(
@@ -266,10 +254,10 @@ class Admin extends Admin_Controller
     public function lesson_edit($id = 0)
     {
         $extra = array(
-            'return' => 'admin/pyrocourse/manage_lesson/'.$id,
+            'return' => 'admin/course/manage_lesson/'.$id,
             'success_message' => lang('pyrocourse:lesson:submit_success'),
             'failure_message' => lang('pyrocourse:lesson:submit_failure'),
-            'title' => anchor('admin/pyrocourse/manage_lesson/'.$id, 'Lesson').' &raquo; '.lang('pyrocourse:edit_lesson')
+            'title' => anchor('admin/course/manage_lesson/'.$id, 'Lesson').' &raquo; '.lang('pyrocourse:edit_lesson')
         );
 
         $tabs = array(
@@ -305,7 +293,7 @@ class Admin extends Admin_Controller
             $this->streams->entries->delete_entry($id, 'lesson', 'streams');
             $this->session->set_flashdata('success', lang('pyrocourse:lesson_deleted'));
  
-            redirect('admin/pyrocourse/manage/'.$lesson->course_id);
+            redirect('admin/course/manage/'.$lesson->course_id);
         } else {
             $this->session->set_flashdata('error', lang('pyrocourse:error_lesson_deleted'));
  
@@ -337,10 +325,10 @@ class Admin extends Admin_Controller
     public function content_add($type = 'text', $lesson_id = false)
     {
         $extra = array(
-            'return' => 'admin/pyrocourse/lesson_manage/'.$lesson_id,
+            'return' => 'admin/course/lesson_manage/'.$lesson_id,
             'success_message' => lang('pyrocourse:content:submit_success'),
             'failure_message' => lang('pyrocourse:content:submit_failure'),
-            'title' => anchor('admin/pyrocourse/manage_lesson/'.$lesson_id, get_lessonname($lesson_id)).' &raquo; '.lang('pyrocourse:add_'.$type.'_content'),
+            'title' => anchor('admin/course/manage_lesson/'.$lesson_id, get_lessonname($lesson_id)).' &raquo; '.lang('pyrocourse:add_'.$type.'_content'),
         );
 
         $hidden = array('lesson_id');
@@ -354,10 +342,10 @@ class Admin extends Admin_Controller
     public function content_edit($type = 'text', $content_id = false, $lesson_id = false)
     {
         $extra = array(
-            'return' => 'admin/pyrocourse/manage_lesson/'.$lesson_id,
+            'return' => 'admin/course/manage_lesson/'.$lesson_id,
             'success_message' => lang('pyrocourse:content:submit_success'),
             'failure_message' => lang('pyrocourse:content:submit_failure'),
-            'title' => anchor('admin/pyrocourse/manage_lesson/'.$lesson_id, get_lessonname($lesson_id)).' &raquo; '.lang('pyrocourse:edit_'.$type.'_content'),
+            'title' => anchor('admin/course/manage_lesson/'.$lesson_id, get_lessonname($lesson_id)).' &raquo; '.lang('pyrocourse:edit_'.$type.'_content'),
         );
 
         $skips = array('lesson_id');
@@ -389,10 +377,10 @@ class Admin extends Admin_Controller
     public function assignment_create($lesson_id = 0)
     {
         $extra = array(
-            'return' => 'admin/pyrocourse/lesson_manage/'.$lesson_id,
+            'return' => 'admin/course/lesson_manage/'.$lesson_id,
             'success_message' => lang('pyrocourse:lesson:submit_success'),
             'failure_message' => lang('pyrocourse:lesson:submit_failure'),
-            'title' => anchor('admin/pyrocourse/manage_lesson/'.$lesson_id, get_lessonname($lesson_id)).' &raquo; '.lang('pyrocourse:add_assignment'),
+            'title' => anchor('admin/course/manage_lesson/'.$lesson_id, get_lessonname($lesson_id)).' &raquo; '.lang('pyrocourse:add_assignment'),
         );
 
         $skips = array('trashed');
@@ -415,31 +403,18 @@ class Admin extends Admin_Controller
      * @param   int [$id] The id of the pyrocourse to the be deleted.
      * @return  void
      */
-    public function assignment_edit($id = 0)
+    public function assignment_edit($lesson_id = 0, $id = false)
     {
         $extra = array(
-            'return' => 'admin/pyrocourse/manage_assignment/'.$id,
+            'return' => 'admin/course/lesson_manage/'.$lesson_id,
             'success_message' => lang('pyrocourse:lesson:submit_success'),
             'failure_message' => lang('pyrocourse:lesson:submit_failure'),
-            'title' => anchor('admin/pyrocourse/manage_assignment/'.$id, 'Lesson').' &raquo; '.lang('pyrocourse:edit_assignment')
+            'title' => anchor('admin/course/manage_lesson/'.$lesson_id, get_lessonname($lesson_id)).' &raquo; '.lang('pyrocourse:add_assignment'),
         );
 
-        $tabs = array(
-            array(
-                'title' => "General",
-                'id' => "general-tab",
-                'fields' => array('title', 'title_slug', 'course_id', 'introduction', 'content')
-                ),
-            array(
-                'title' => "Publication",
-                'id' => "publication-tab",
-                'fields' => array('visibility', 'status')
-                ),
-            );
+        $skips = array('trashed', 'lesson_id');
 
-        $skips = array('allow_comment', 'trashed');
-
-        $this->streams->cp->entry_form('lesson', 'streams', 'edit', $id, true, $extra, $skips, $tabs);
+        $this->streams->cp->entry_form('assignment', 'streams', 'edit', $id, true, $extra, $skips);
     }
 
     /**
@@ -455,7 +430,7 @@ class Admin extends Admin_Controller
             $this->streams->entries->delete_entry($id, 'lesson', 'streams');
             $this->session->set_flashdata('success', lang('pyrocourse:lesson_deleted'));
  
-            redirect('admin/pyrocourse/manage/'.$lesson->course_id);
+            redirect('admin/course/manage/'.$lesson->course_id);
         } else {
             $this->session->set_flashdata('error', lang('pyrocourse:error_assignment_deleted'));
  

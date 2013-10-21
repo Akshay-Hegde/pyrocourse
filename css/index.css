@@ -86,3 +86,31 @@ section.item {
 	margin-bottom: 20px;
 	overflow: hidden;
 }
+
+section.title {
+	background-image: -webkit-linear-gradient(rgb(255, 255, 255), rgb(230, 230, 230));
+	background-image:-moz-linear-gradient(rgb(255, 255, 255), rgb(230, 230, 230));
+	background-image:-o-linear-gradient(rgb(255, 255, 255), rgb(230, 230, 230));
+	background-image:-ms-linear-gradient(rgb(255, 255, 255), rgb(230, 230, 230));
+}
+section.title.lesson {
+	background-image: -webkit-linear-gradient(rgb(255, 255, 255), rgb(223, 231, 238));
+	background-image:-moz-linear-gradient(rgb(255, 255, 255), rgb(223, 231, 238));
+	background-image:-o-linear-gradient(rgb(255, 255, 255), rgb(223, 231, 238));
+	background-image:-ms-linear-gradient(rgb(255, 255, 255), rgb(223, 231, 238));
+}
+section.title.content {
+	background-image: -webkit-linear-gradient(rgb(255, 255, 255), rgb(225, 238, 223));
+	background-image:-moz-linear-gradient(rgb(255, 255, 255), rgb(225, 238, 223));
+	background-image:-o-linear-gradient(rgb(255, 255, 255), rgb(225, 238, 223));
+	background-image:-ms-linear-gradient(rgb(255, 255, 255), rgb(225, 238, 223));
+}
+section.title.assignment {
+	background-image: -webkit-linear-gradient(rgb(255, 255, 255), rgb(238, 235, 223));
+	background-image:-moz-linear-gradient(rgb(255, 255, 255), rgb(238, 235, 223));
+	background-image:-o-linear-gradient(rgb(255, 255, 255), rgb(238, 235, 223));
+	background-image:-ms-linear-gradient(rgb(255, 255, 255), rgb(238, 235, 223));
+}
+#filters > ul > li {
+	display: inline-block;
+}

@@ -23,14 +23,14 @@ class Module_Course extends Module
                     'shortcuts' => array(
                         'create' => array(
                             'name' => 'pyrocourse:new_course',
-                            'uri' => 'admin/course/create_course',
+                            'uri' => 'admin/course/course_create',
                             'class' => 'add'
                         )
                     )
                 ),
-                'student' => array(
-                    'name' => 'pyrocourse:student',
-                    'uri' => 'admin/course',
+                'enrollment' => array(
+                    'name' => 'pyrocourse:enrollment',
+                    'uri' => 'admin/course/enrollment',
                     'shortcuts' => array(
                         'create' => array(
                             'name' => 'pyrocourse:new_course',

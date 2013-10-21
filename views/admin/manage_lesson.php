@@ -1,7 +1,7 @@
 <div class="one_full">
 	<div class="one_half">
 
-		<section class="title">
+		<section class="title lesson">
 			<h4>Lesson Description</h4>
 		</section>
 
@@ -12,9 +12,14 @@
 					<tbody>
 						<tr>
 							<td>
-								<?php echo anchor('admin/pyrocourse/manage/'.$lesson->course_id, get_coursename($lesson->course_id)); ?>
-								&raquo;
-								<strong><?php echo $lesson->title; ?></strong>
+								<strong>Lesson Title</strong><br>
+								<?php echo $lesson->title; ?>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<strong>Course</strong><br>
+								<?php echo anchor('admin/course/manage/'.$lesson->course_id, get_coursename($lesson->course_id)); ?>
 							</td>
 						</tr>
 						<tr>
@@ -35,8 +40,8 @@
 						</tr>
 						<tr>
 							<td style="text-align:right">
-								<?php echo anchor('admin/pyrocourse/edit_lesson/'.$this->uri->segment(4), lang('pyrocourse:edit_lesson'), 'class="button"');?>
-								<?php echo anchor('admin/pyrocourse/delete_lesson/'.$this->uri->segment(4), lang('pyrocourse:delete_lesson'), 'class="button delete confirm"');?>
+								<?php echo anchor('admin/course/edit_lesson/'.$this->uri->segment(4), lang('pyrocourse:edit_lesson'), 'class="button"');?>
+								<?php echo anchor('admin/course/delete_lesson/'.$this->uri->segment(4), lang('pyrocourse:delete_lesson'), 'class="button delete confirm"');?>
 							</td>
 						</tr>
 					</tbody>
@@ -48,11 +53,11 @@
 
 	<div class="one_half last">
 		<div class="one-full">
-			<section class="title">
+			<section class="title content">
 				<h4>
 					<?php echo lang('pyrocourse:content'); ?>
-					<?php echo anchor('admin/pyrocourse/content_add/text/'.$this->uri->segment(4), lang('pyrocourse:add_text_content'), 'class="button" style="float:right;margin-right:17px;"');?>
-					<?php echo anchor('admin/pyrocourse/content_add/video/'.$this->uri->segment(4), lang('pyrocourse:add_video_content'), 'class="button" style="float:right;margin-right:7px;"');?>
+					<?php echo anchor('admin/course/content_add/text/'.$this->uri->segment(4), lang('pyrocourse:add_text_content'), 'class="button" style="float:right;margin-right:17px;"');?>
+					<?php echo anchor('admin/course/content_add/video/'.$this->uri->segment(4), lang('pyrocourse:add_video_content'), 'class="button" style="float:right;margin-right:7px;"');?>
 				</h4>
 			</section>
 			<section class="item">
@@ -64,7 +69,7 @@
 							<?php foreach ($contents as $value) : ?>
 							<li id="content_<?php echo $value['id']; ?>">
 								<div>
-									<a href="<?php echo site_url('admin/pyrocourse/content_edit/'.$value['content_type'].'/'.$value['content_id'].'/'.$value['lesson_id']); ?>" 
+									<a href="<?php echo site_url('admin/course/content_edit/'.$value['content_type'].'/'.$value['content_id'].'/'.$value['lesson_id']); ?>" 
 										class="<?php echo $value['content_type']; ?>" 
 										rel="<?php echo $value['id']; ?>"
 										title="<?php echo $value['title']; ?>"><?php echo ucfirst($value['content_type']); ?> - <?php echo $value['title']; ?></a>
@@ -88,10 +93,10 @@
 
 		<div class="one_full">
 			
-			<section class="title">
+			<section class="title assignment">
 				<h4>
 					<?php echo lang('pyrocourse:assignments');?>
-					<?php echo anchor('admin/pyrocourse/assignment_create/'.$this->uri->segment(4), lang('pyrocourse:add_assignment'), 'class="button" style="float:right;margin-right:17px;"');?>
+					<?php echo anchor('admin/course/assignment_create/'.$this->uri->segment(4), lang('pyrocourse:add_assignment'), 'class="button" style="float:right;margin-right:17px;"');?>
 				</h4>
 			</section>
 
@@ -104,7 +109,7 @@
 							<?php foreach ($assignment['entries'] as $value) : ?>
 							<li id="assignment_<?php echo $value['id']; ?>">
 								<div>
-									<a href="<?php echo site_url('admin/pyrocourse/assignment/'.$value['id']); ?>" 
+									<a href="<?php echo site_url('admin/course/assignment_edit/'.$value['lesson_id']['id'].'/'.$value['id']); ?>" 
 										class="<?php echo $value['status']['key']; ?>" 
 										rel="<?php echo $value['id'] ?>"
 										title="<?php echo $value['title']; ?>"><?php echo $value['title']; ?></a>

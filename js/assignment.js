@@ -3,7 +3,7 @@
 
 		// set values for pyro.sort_tree (we'll use them below also)
 		$item_list	= $('#assignment-list ul.sortable');
-		$url		= 'admin/pyrocourse/assignment_order';
+		$url		= 'admin/course/assignment_order';
 		$cookie		= 'open_assignment';
 
 		// make the link clickable and go to the link page

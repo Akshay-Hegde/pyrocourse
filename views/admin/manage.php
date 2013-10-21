@@ -34,8 +34,8 @@
 						</tr>
 						<tr>
 							<td style="text-align:right">
-								<?php echo anchor('admin/pyrocourse/course_edit/'.$this->uri->segment(4), lang('pyrocourse:edit_course'), 'class="button"');?>
-								<?php echo anchor('admin/pyrocourse/course_delete/'.$this->uri->segment(4), lang('pyrocourse:delete_course'), 'class="button delete confirm"');?>
+								<?php echo anchor('admin/course/course_edit/'.$this->uri->segment(4), lang('pyrocourse:edit_course'), 'class="button"');?>
+								<?php echo anchor('admin/course/course_delete/'.$this->uri->segment(4), lang('pyrocourse:delete_course'), 'class="button delete confirm"');?>
 							</td>
 						</tr>
 					</tbody>
@@ -47,10 +47,10 @@
 
 	<div class="one_half last">
 
-		<section class="title">
+		<section class="title lesson">
 			<h4>
 				<?php echo lang('pyrocourse:lessons');?>
-				<?php echo anchor('admin/pyrocourse/lesson_create/'.$this->uri->segment(4), lang('pyrocourse:new_lesson'), 'class="button" style="float:right;margin-right:17px;"');?>
+				<?php echo anchor('admin/course/lesson_create/'.$this->uri->segment(4), lang('pyrocourse:new_lesson'), 'class="button" style="float:right;margin-right:17px;"');?>
 			</h4>
 		</section>
 
@@ -63,7 +63,7 @@
 						<?php foreach ($lesson['entries'] as $value) : ?>
 						<li id="lesson_<?php echo $value['id']; ?>">
 							<div>
-								<a href="<?php echo site_url('admin/pyrocourse/lesson_manage/'.$value['id']); ?>" 
+								<a href="<?php echo site_url('admin/course/lesson_manage/'.$value['id']); ?>" 
 									class="<?php echo $value['status']['key'].' '.$value['visibility']['key']; ?>" 
 									rel="<?php echo $value['id'] ?>"
 									title="<?php echo $value['title']; ?>"><?php echo $value['title']; ?></a>

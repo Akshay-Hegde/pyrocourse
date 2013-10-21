@@ -3,7 +3,7 @@
 
 		// set values for pyro.sort_tree (we'll use them below also)
 		$item_list	= $('#lesson-list ul.sortable');
-		$url		= 'admin/pyrocourse/lesson_order';
+		$url		= 'admin/course/lesson_order';
 		$cookie		= 'open_lesson';
 
 		// make the link clickable and go to the link page

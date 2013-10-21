@@ -53,8 +53,8 @@
 							<td><?php echo $row['class_id']['title']; ?></td>
 							<td><?php echo $row['enroll_status']['value']; ?></td>
 							<td style="text-align:right">
-								<a class="button" href="<?php echo site_url('admin/enrollment/edit/'.$row['id']); ?>">Edit</a>
-								<a class="button" href="<?php echo site_url('admin/enrollment/delete/'.$row['id']); ?>">Delete</a>
+								<a class="button" href="<?php echo site_url('admin/course/enrollment/edit/'.$row['id']); ?>">Edit</a>
+								<a class="button" href="<?php echo site_url('admin/course/enrollment/delete/'.$row['id']); ?>">Delete</a>
 							</td>
 						</tr>
 						<?php endforeach; ?>

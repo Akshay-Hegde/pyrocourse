@@ -82,4 +82,18 @@ class Admin_Enrollment extends Admin_Controller
         echo $this->load->view('admin/enrollment/table', $data, true);
     }
 
+    public function edit($id = false)
+    {
+        $extra = array(
+            'return'            => 'admin/course/enrollment',
+            'success_message'   => lang('pyrocourse:submit_success'),
+            'failure_message'   => lang('pyrocourse:submit_failure'),
+            'title'             => lang('pyrocourse:edit')
+            );
+
+        $skips = array('student_id', 'course_id');
+
+        $this->streams->cp->entry_form('enrollment', 'streams', 'edit', $id, true, $extra, $skips);
+    }
+
 }

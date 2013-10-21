@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed');
 
-class Module_Pyrocourse extends Module
+class Module_Course extends Module
 {
     public $version = '1.0';
 
@@ -19,33 +19,33 @@ class Module_Pyrocourse extends Module
             'sections' => array(
                 'course' => array(
                     'name' => 'pyrocourse:courses',
-                    'uri' => 'admin/pyrocourse',
+                    'uri' => 'admin/course',
                     'shortcuts' => array(
                         'create' => array(
                             'name' => 'pyrocourse:new_course',
-                            'uri' => 'admin/pyrocourse/create_course',
+                            'uri' => 'admin/course/create_course',
                             'class' => 'add'
                         )
                     )
                 ),
                 'student' => array(
                     'name' => 'pyrocourse:student',
-                    'uri' => 'admin/pyrocourse',
+                    'uri' => 'admin/course',
                     'shortcuts' => array(
                         'create' => array(
                             'name' => 'pyrocourse:new_course',
-                            'uri' => 'admin/pyrocourse/create',
+                            'uri' => 'admin/course/create',
                             'class' => 'add'
                         )
                     )
                 ),
                 'task' => array(
                     'name' => 'pyrocourse:submission',
-                    'uri' => 'admin/pyrocourse',
+                    'uri' => 'admin/course',
                     'shortcuts' => array(
                         'create' => array(
                             'name' => 'pyrocourse:new_course',
-                            'uri' => 'admin/pyrocourse/create_course',
+                            'uri' => 'admin/course/create_course',
                             'class' => 'add'
                         )
                     )
